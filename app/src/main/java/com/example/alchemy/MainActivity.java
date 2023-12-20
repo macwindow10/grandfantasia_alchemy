@@ -1,11 +1,13 @@
 package com.example.alchemy;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
@@ -17,6 +19,10 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +37,18 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ImageView imageView = findViewById(R.id.image_view_1);
+        try {
+            // get input stream
+            InputStream ims = getAssets().open("A00001.png");
+            // load image as Drawable
+            Drawable d = Drawable.createFromStream(ims, null);
+            // set image to ImageView
+            imageView.setImageDrawable(d);
+        } catch (IOException ex) {
+            Log.e("I/O ERROR", "Failed when ...");
+        }
     }
 
     @Override
