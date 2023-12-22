@@ -8,7 +8,7 @@
         android:id="@+id/button_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="S"></Button>
+        android:text="+"></Button>
 
     <ImageView
         android:id="@+id/image_view"
@@ -18,7 +18,7 @@
         android:id="@+id/text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Q: 0">
+        android:text="0">
 
     </TextView>
 </LinearLayout>

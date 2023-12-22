@@ -10,14 +10,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,8 +34,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextSearchById;
     private RecyclerView recyclerView;
     private GridView gridView;
-    private ArrayList<ImageItemModel> listSelectedImages = new ArrayList<ImageItemModel>();
     private ArrayList<ImageItemModel> listAllImages = new ArrayList<ImageItemModel>();
+    private ArrayList<ImageItemModel> listSelectedImages = new ArrayList<ImageItemModel>();
+    private ArrayList<ImageItemModel> listOfSearchResult = new ArrayList<ImageItemModel>();
     private SearchItemAdapter searchItemAdapter;
     private ImageItemAdapter imageItemAdapter;
 
@@ -50,16 +56,51 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         gridView = findViewById(R.id.grid_view);
 
-        populateAllImagesList();
+        populateLists();
 
-        searchItemAdapter = new SearchItemAdapter(this, listAllImages);
+        searchItemAdapter = new SearchItemAdapter(this, listOfSearchResult);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(searchItemAdapter);
+        if (listOfSearchResult.size() == 0) {
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+        }
 
         imageItemAdapter = new ImageItemAdapter(this, listSelectedImages);
         gridView.setAdapter(imageItemAdapter);
 
+        editTextSearchByName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String s = editable.toString();
+                if (s.length() < 3) {
+                    recyclerView.setVisibility(View.GONE);
+                    return;
+                }
+
+                List<ImageItemModel> list = listAllImages
+                        .stream()
+                        .filter(c -> c.getName().contains(s))
+                        .collect(Collectors.toList());
+                listOfSearchResult = new ArrayList<ImageItemModel>(list);
+                searchItemAdapter.notifyDataSetChanged();
+                if (listOfSearchResult.size() > 0) {
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         /*
         ImageView imageView = findViewById(R.id.image_view_1);
         ImageView imageView2 = findViewById(R.id.image_view_2);
@@ -84,12 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -97,9 +133,17 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void populateAllImagesList() {
+    private void populateLists() {
+        ImageItemModel imageItemModel;
         try {
-            ImageItemModel imageItemModel;
+
+            for (int i = 0; i < 40; i++) {
+                imageItemModel = new ImageItemModel("");
+                imageItemModel.setId("");
+                imageItemModel.setName("");
+                imageItemModel.setValue(0);
+                listSelectedImages.add(imageItemModel);
+            }
 
             imageItemModel = new ImageItemModel("A00001.png");
             imageItemModel.setId("10266");
@@ -124,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
             imageItemModel.setName("Big Boss Winn's Request Reward IV");
             imageItemModel.setValue(8);
             listAllImages.add(imageItemModel);
-            
+
         } catch (Exception exception) {
 
         }

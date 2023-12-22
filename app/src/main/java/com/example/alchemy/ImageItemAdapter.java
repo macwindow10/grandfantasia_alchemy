@@ -45,9 +45,11 @@ public class ImageItemAdapter extends ArrayAdapter<ImageItemModel> {
         TextView textView = listItemView.findViewById(R.id.text_view);
 
         try {
-            InputStream ims = context.getAssets().open(imageItemModel.getIcon());
-            Drawable d = Drawable.createFromStream(ims, null);
-            imageView.setImageDrawable(d);
+            if (imageItemModel.getIcon() != "") {
+                InputStream ims = context.getAssets().open(imageItemModel.getIcon());
+                Drawable d = Drawable.createFromStream(ims, null);
+                imageView.setImageDrawable(d);
+            }
         } catch (IOException ex) {
             Log.e(TAG, "Failed when ...");
         }

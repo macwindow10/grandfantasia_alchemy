@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -67,6 +68,16 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
             textViewName = itemLayoutView.findViewById(R.id.text_view_name);
             textViewValue = itemLayoutView.findViewById(R.id.text_view_value);
             imageView = itemLayoutView.findViewById(R.id.image_view);
+
+            itemLayoutView.setLongClickable(true);
+            itemLayoutView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    int position = getLayoutPosition();
+                    Toast.makeText(view.getContext(), "" + position, Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            });
         }
     }
 }
