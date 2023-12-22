@@ -1,18 +1,35 @@
 package com.example.alchemy;
 
-import android.graphics.drawable.Drawable;
-import android.util.Log;
-
-import java.io.IOException;
-import java.io.InputStream;
-
 public class ImageItemModel {
+
+    private String id;
+    private String icon;
     private String name;
+    private int value;
     private int quantity;
 
     public ImageItemModel(String name) {
+        this.id = "";
+        this.icon = "";
         this.name = name;
+        this.value = 0;
         this.quantity = 0;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getName() {
@@ -21,6 +38,14 @@ public class ImageItemModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 
     public int getQuantity() {

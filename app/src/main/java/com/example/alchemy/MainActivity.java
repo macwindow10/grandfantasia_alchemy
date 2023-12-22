@@ -1,20 +1,12 @@
 package com.example.alchemy;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
-import android.view.View;
-
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.WindowCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -23,11 +15,8 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextSearchById;
     private RecyclerView recyclerView;
     private GridView gridView;
-    private ArrayList<ImageItemModel> imageItemModelArrayList = new ArrayList<ImageItemModel>();
+    private ArrayList<ImageItemModel> listSelectedImages = new ArrayList<ImageItemModel>();
+    private ArrayList<ImageItemModel> listAllImages = new ArrayList<ImageItemModel>();
+    private SearchItemAdapter searchItemAdapter;
     private ImageItemAdapter imageItemAdapter;
 
     @Override
@@ -59,11 +50,18 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         gridView = findViewById(R.id.grid_view);
 
-        imageItemModelArrayList.add(new ImageItemModel("A00001.png"));
-        imageItemModelArrayList.add(new ImageItemModel("A00002.png"));
-        imageItemModelArrayList.add(new ImageItemModel("A00001.png"));
+        listAllImages.add(new ImageItemModel("A00001.png"));
+        listAllImages.add(new ImageItemModel("A00002.png"));
+        listAllImages.add(new ImageItemModel("A00003.png"));
+        searchItemAdapter = new SearchItemAdapter(this, listAllImages);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(searchItemAdapter);
 
-        imageItemAdapter = new ImageItemAdapter(this, imageItemModelArrayList);
+        listSelectedImages.add(new ImageItemModel("A00001.png"));
+        listSelectedImages.add(new ImageItemModel("A00002.png"));
+        listSelectedImages.add(new ImageItemModel("A00003.png"));
+        imageItemAdapter = new ImageItemAdapter(this, listSelectedImages);
         gridView.setAdapter(imageItemAdapter);
 
         /*

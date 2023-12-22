@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 public class ImageItemAdapter extends ArrayAdapter<ImageItemModel> {
 
+    private static String TAG = ImageItemAdapter.class.getName();
     private Context context;
 
     public ImageItemAdapter(@NonNull Context context,
@@ -48,7 +49,7 @@ public class ImageItemAdapter extends ArrayAdapter<ImageItemModel> {
             Drawable d = Drawable.createFromStream(ims, null);
             imageView.setImageDrawable(d);
         } catch (IOException ex) {
-            Log.e("I/O ERROR", "Failed when ...");
+            Log.e(TAG, "Failed when ...");
         }
         textView.setText("Q: " + imageItemModel.getQuantity());
 
