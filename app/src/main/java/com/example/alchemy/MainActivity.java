@@ -50,17 +50,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         gridView = findViewById(R.id.grid_view);
 
-        listAllImages.add(new ImageItemModel("A00001.png"));
-        listAllImages.add(new ImageItemModel("A00002.png"));
-        listAllImages.add(new ImageItemModel("A00003.png"));
+        populateAllImagesList();
+
         searchItemAdapter = new SearchItemAdapter(this, listAllImages);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(searchItemAdapter);
 
-        listSelectedImages.add(new ImageItemModel("A00001.png"));
-        listSelectedImages.add(new ImageItemModel("A00002.png"));
-        listSelectedImages.add(new ImageItemModel("A00003.png"));
         imageItemAdapter = new ImageItemAdapter(this, listSelectedImages);
         gridView.setAdapter(imageItemAdapter);
 
@@ -99,5 +95,38 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void populateAllImagesList() {
+        try {
+            ImageItemModel imageItemModel;
+
+            imageItemModel = new ImageItemModel("A00001.png");
+            imageItemModel.setId("10266");
+            imageItemModel.setName("Big Boss Winn's Request Reward I");
+            imageItemModel.setValue(8);
+            listAllImages.add(imageItemModel);
+
+            imageItemModel = new ImageItemModel("A00001.png");
+            imageItemModel.setId("10267");
+            imageItemModel.setName("Big Boss Winn's Request Reward II");
+            imageItemModel.setValue(8);
+            listAllImages.add(imageItemModel);
+
+            imageItemModel = new ImageItemModel("A00001.png");
+            imageItemModel.setId("10268");
+            imageItemModel.setName("Big Boss Winn's Request Reward III");
+            imageItemModel.setValue(8);
+            listAllImages.add(imageItemModel);
+
+            imageItemModel = new ImageItemModel("A00001.png");
+            imageItemModel.setId("10269");
+            imageItemModel.setName("Big Boss Winn's Request Reward IV");
+            imageItemModel.setValue(8);
+            listAllImages.add(imageItemModel);
+            
+        } catch (Exception exception) {
+
+        }
     }
 }

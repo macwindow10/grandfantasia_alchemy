@@ -8,10 +8,10 @@ public class ImageItemModel {
     private int value;
     private int quantity;
 
-    public ImageItemModel(String name) {
+    public ImageItemModel(String icon) {
         this.id = "";
-        this.icon = "";
-        this.name = name;
+        this.icon = icon;
+        this.name = "";
         this.value = 0;
         this.quantity = 0;
     }

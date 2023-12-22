@@ -40,7 +40,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
         viewHolder.textViewName.setText("" + arrayList.get(position).getName());
         viewHolder.textViewValue.setText("" + arrayList.get(position).getValue());
         try {
-            InputStream ims = context.getAssets().open(arrayList.get(position).getName());
+            InputStream ims = context.getAssets().open(arrayList.get(position).getIcon());
             Drawable d = Drawable.createFromStream(ims, null);
             viewHolder.imageView.setImageDrawable(d);
         } catch (IOException ex) {

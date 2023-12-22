@@ -74,7 +74,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:scrollbars="vertical">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -82,7 +85,7 @@
                 android:id="@+id/grid_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="4dp"
                 android:gravity="center"
                 android:horizontalSpacing="8dp"
                 android:nestedScrollingEnabled="true"
