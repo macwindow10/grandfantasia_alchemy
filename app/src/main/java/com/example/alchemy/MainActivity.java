@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(searchItemAdapter);
         if (listOfSearchResult.size() == 0) {
-            recyclerView.setVisibility(View.GONE);
+            //recyclerView.setVisibility(View.GONE);
         } else {
             recyclerView.setVisibility(View.VISIBLE);
         }
@@ -86,19 +87,21 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String s = editable.toString();
                 if (s.length() < 3) {
-                    recyclerView.setVisibility(View.GONE);
+                    //recyclerView.setVisibility(View.GONE);
                     return;
                 }
 
+                Log.i("MainActivity", s);
                 List<ImageItemModel> list = listAllImages
                         .stream()
                         .filter(c -> c.getName().contains(s))
                         .collect(Collectors.toList());
+                Log.i("MainActivity", list.size() + "");
                 listOfSearchResult = new ArrayList<ImageItemModel>(list);
-                searchItemAdapter.notifyDataSetChanged();
                 if (listOfSearchResult.size() > 0) {
                     recyclerView.setVisibility(View.VISIBLE);
                 }
+                searchItemAdapter.notifyDataSetChanged();
             }
         });
         /*
@@ -168,6 +171,14 @@ public class MainActivity extends AppCompatActivity {
             imageItemModel.setName("Big Boss Winn's Request Reward IV");
             imageItemModel.setValue(8);
             listAllImages.add(imageItemModel);
+
+
+            List<ImageItemModel> list = listAllImages
+                    .stream()
+                    .filter(c -> c.getName().contains("Big"))
+                    .collect(Collectors.toList());
+            listOfSearchResult = new ArrayList<ImageItemModel>(list);
+            searchItemAdapter.notifyDataSetChanged();
 
         } catch (Exception exception) {
 
