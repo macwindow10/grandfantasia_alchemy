@@ -19,15 +19,27 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private Toolbar toolbar;
+    private TextView textViewSelectFile;
+    private Button buttonSelectFile;
+    private EditText editTextSearchByName;
+    private EditText editTextSearchById;
+    private GridView gridView;
+    private ArrayList<ImageItemModel> imageItemModelArrayList = new ArrayList<ImageItemModel>();
+    private ImageItemAdapter imageItemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +50,28 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        textViewSelectFile = findViewById(R.id.text_view_file);
+        buttonSelectFile = findViewById(R.id.button_select_file);
+        editTextSearchByName = findViewById(R.id.edit_text_search_by_name);
+        editTextSearchById = findViewById(R.id.edit_text_search_by_id);
+        gridView = findViewById(R.id.grid_view);
+
+        imageItemModelArrayList.add(new ImageItemModel("A00001.png"));
+        imageItemModelArrayList.add(new ImageItemModel("A00002.png"));
+        imageItemModelArrayList.add(new ImageItemModel("A00001.png"));
+        
+        imageItemAdapter = new ImageItemAdapter(this, imageItemModelArrayList);
+        gridView.setAdapter(imageItemAdapter);
+
         ImageView imageView = findViewById(R.id.image_view_1);
+        ImageView imageView2 = findViewById(R.id.image_view_2);
         try {
-            // get input stream
             InputStream ims = getAssets().open("A00001.png");
-            // load image as Drawable
             Drawable d = Drawable.createFromStream(ims, null);
-            // set image to ImageView
             imageView.setImageDrawable(d);
+            ims = getAssets().open("A00002.png");
+            d = Drawable.createFromStream(ims, null);
+            imageView2.setImageDrawable(d);
         } catch (IOException ex) {
             Log.e("I/O ERROR", "Failed when ...");
         }
