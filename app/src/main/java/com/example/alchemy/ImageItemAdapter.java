@@ -50,7 +50,7 @@ public class ImageItemAdapter extends ArrayAdapter<ImageItemModel> {
         } catch (IOException ex) {
             Log.e("I/O ERROR", "Failed when ...");
         }
-        textView.setText(imageItemModel.getQuantity());
+        textView.setText("Q: " + imageItemModel.getQuantity());
 
         return listItemView;
     }

@@ -15,6 +15,7 @@ import androidx.core.view.WindowCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.view.Menu;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonSelectFile;
     private EditText editTextSearchByName;
     private EditText editTextSearchById;
+    private RecyclerView recyclerView;
     private GridView gridView;
     private ArrayList<ImageItemModel> imageItemModelArrayList = new ArrayList<ImageItemModel>();
     private ImageItemAdapter imageItemAdapter;
@@ -54,15 +56,17 @@ public class MainActivity extends AppCompatActivity {
         buttonSelectFile = findViewById(R.id.button_select_file);
         editTextSearchByName = findViewById(R.id.edit_text_search_by_name);
         editTextSearchById = findViewById(R.id.edit_text_search_by_id);
+        recyclerView = findViewById(R.id.recycler_view);
         gridView = findViewById(R.id.grid_view);
 
         imageItemModelArrayList.add(new ImageItemModel("A00001.png"));
         imageItemModelArrayList.add(new ImageItemModel("A00002.png"));
         imageItemModelArrayList.add(new ImageItemModel("A00001.png"));
-        
+
         imageItemAdapter = new ImageItemAdapter(this, imageItemModelArrayList);
         gridView.setAdapter(imageItemAdapter);
 
+        /*
         ImageView imageView = findViewById(R.id.image_view_1);
         ImageView imageView2 = findViewById(R.id.image_view_2);
         try {
@@ -74,7 +78,8 @@ public class MainActivity extends AppCompatActivity {
             imageView2.setImageDrawable(d);
         } catch (IOException ex) {
             Log.e("I/O ERROR", "Failed when ...");
-        }
+        }*/
+
     }
 
     @Override

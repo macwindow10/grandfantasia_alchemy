@@ -50,7 +50,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.25"
-                    android:text="Select File"></Button>
+                    android:text="Select"></Button>
             </LinearLayout>
 
             <EditText
@@ -71,6 +71,13 @@
 
             </EditText>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
             <GridView
                 android:id="@+id/grid_view"
                 android:layout_width="match_parent"
@@ -87,7 +94,8 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:shrinkColumns="*">
+                android:shrinkColumns="*"
+                android:visibility="gone">
 
                 <TableRow android:layout_margin="8dp">
 
