@@ -63,13 +63,21 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         gridView = findViewById(R.id.grid_view);
 
-        Thread thread = new Thread(new Runnable() {
+        String path = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+        textViewSelectFile.setText(path + "/Local DB TW.txt");
+
+        buttonSelectFile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                populateLists();
+            public void onClick(View view) {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        populateLists();
+                    }
+                });
+                thread.start();
             }
         });
-        thread.start();
 
         searchItemAdapter = new SearchItemAdapter(this, listOfSearchResult);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -164,14 +172,16 @@ public class MainActivity extends AppCompatActivity {
             BufferedReader r = null;
             try {
                 String path = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+                Log.i(TAG, "reading file::path::" + path);
                 r = new BufferedReader(new FileReader(path + "/Local DB TW.txt"));
                 Log.i(TAG, "reading file::start");
                 int i = 1;
                 String[] values;
                 String line;
                 while ((line = r.readLine()) != null) {
-
-                    values = line.split("|");
+                    // Log.i(TAG, line);
+                    values = line.split("\\|");
+                    // Log.i(TAG, String.valueOf(values.length));
                     if (values.length != 4) {
                         continue;
                     }
@@ -181,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                     imageItemModel.setValue(Integer.parseInt(values[3].trim()));
                     listAllImages.add(imageItemModel);
 
-                    Log.i(TAG, "reading file::record number" + String.valueOf(i));
+                    // Log.i(TAG, "reading file::record number" + String.valueOf(i));
                     i++;
                 }
             } catch (Exception exception) {
@@ -192,6 +202,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             Log.i(TAG, "reading file::finished");
+
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    imageItemAdapter.notifyDataSetChanged();
+                }
+            });
 
             /*
             imageItemModel = new ImageItemModel("A00001.png");
@@ -235,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void addInSelectedImagesList(ImageItemModel imageItemModel) {
         if (currentPosition < 40) {
-            listSelectedImages.add(currentPosition, imageItemModel);
+            listSelectedImages.set(currentPosition, imageItemModel);
             imageItemAdapter.notifyDataSetChanged();
             currentPosition++;
             Toast.makeText(this, "Item added", Toast.LENGTH_LONG).show();

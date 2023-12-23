@@ -41,7 +41,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
         viewHolder.textViewName.setText("" + arrayList.get(position).getName());
         viewHolder.textViewValue.setText("" + arrayList.get(position).getValue());
         try {
-            InputStream ims = context.getAssets().open(arrayList.get(position).getIcon());
+            InputStream ims = context.getAssets().open(arrayList.get(position).getIcon() + ".png");
             Drawable d = Drawable.createFromStream(ims, null);
             viewHolder.imageView.setImageDrawable(d);
         } catch (IOException ex) {
@@ -74,7 +74,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
                 @Override
                 public boolean onLongClick(View view) {
                     int position = getLayoutPosition();
-                    ((MainActivity)context).addInSelectedImagesList(arrayList.get(position));
+                    ((MainActivity) context).addInSelectedImagesList(arrayList.get(position));
                     // Toast.makeText(view.getContext(), "Item added", Toast.LENGTH_LONG).show();
                     return false;
                 }
