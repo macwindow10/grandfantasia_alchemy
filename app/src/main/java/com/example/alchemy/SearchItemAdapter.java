@@ -75,7 +75,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
                 public boolean onLongClick(View view) {
                     int position = getLayoutPosition();
                     ((MainActivity)context).addInSelectedImagesList(arrayList.get(position));
-                    Toast.makeText(view.getContext(), "Item added", Toast.LENGTH_LONG).show();
+                    // Toast.makeText(view.getContext(), "Item added", Toast.LENGTH_LONG).show();
                     return false;
                 }
             });

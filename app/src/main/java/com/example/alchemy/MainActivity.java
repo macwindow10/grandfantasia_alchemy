@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -20,13 +21,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static String TAG = MainActivity.class.getName();
     private AppBarConfiguration appBarConfiguration;
     private Toolbar toolbar;
     private TextView textViewSelectFile;
@@ -58,7 +63,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         gridView = findViewById(R.id.grid_view);
 
-        populateLists();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                populateLists();
+            }
+        });
+        thread.start();
 
         searchItemAdapter = new SearchItemAdapter(this, listOfSearchResult);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -92,12 +103,12 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                Log.i("MainActivity", s);
+                Log.i(TAG, s);
                 List<ImageItemModel> list = listAllImages
                         .stream()
                         .filter(c -> c.getName().contains(s))
                         .collect(Collectors.toList());
-                Log.i("MainActivity", list.size() + "");
+                Log.i(TAG, list.size() + "");
                 listOfSearchResult = new ArrayList<ImageItemModel>(list);
                 if (listOfSearchResult.size() > 0) {
                     recyclerView.setVisibility(View.VISIBLE);
@@ -150,6 +161,39 @@ public class MainActivity extends AppCompatActivity {
                 listSelectedImages.add(imageItemModel);
             }
 
+            BufferedReader r = null;
+            try {
+                String path = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+                r = new BufferedReader(new FileReader(path + "/Local DB TW.txt"));
+                Log.i(TAG, "reading file::start");
+                int i = 1;
+                String[] values;
+                String line;
+                while ((line = r.readLine()) != null) {
+
+                    values = line.split("|");
+                    if (values.length != 4) {
+                        continue;
+                    }
+                    imageItemModel = new ImageItemModel(values[1].trim());
+                    imageItemModel.setId(values[0].trim());
+                    imageItemModel.setName(values[2].trim());
+                    imageItemModel.setValue(Integer.parseInt(values[3].trim()));
+                    listAllImages.add(imageItemModel);
+
+                    Log.i(TAG, "reading file::record number" + String.valueOf(i));
+                    i++;
+                }
+            } catch (Exception exception) {
+                Log.e(TAG, "reading file::" + exception.getMessage());
+            } finally {
+                if (r != null) {
+                    r.close();
+                }
+            }
+            Log.i(TAG, "reading file::finished");
+
+            /*
             imageItemModel = new ImageItemModel("A00001.png");
             imageItemModel.setId("10266");
             imageItemModel.setName("Big Boss Winn's Request Reward I");
@@ -173,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
             imageItemModel.setName("Big Boss Winn's Request Reward IV");
             imageItemModel.setValue(8);
             listAllImages.add(imageItemModel);
+            */
 
             /*
             List<ImageItemModel> list = listAllImages
@@ -189,7 +234,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addInSelectedImagesList(ImageItemModel imageItemModel) {
-        listSelectedImages.add(currentPosition, imageItemModel);
-        imageItemAdapter.notifyDataSetChanged();
+        if (currentPosition < 40) {
+            listSelectedImages.add(currentPosition, imageItemModel);
+            imageItemAdapter.notifyDataSetChanged();
+            currentPosition++;
+            Toast.makeText(this, "Item added", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Grid is full", Toast.LENGTH_LONG).show();
+        }
     }
 }
