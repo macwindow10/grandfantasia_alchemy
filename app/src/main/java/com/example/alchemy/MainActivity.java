@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private EditText editTextSearchByName;
     private EditText editTextSearchById;
+    private Button buttonSelectImagesRandomly;
     private RecyclerView recyclerView;
     private GridView gridView;
     private ArrayList<ImageItemModel> listAllImages = new ArrayList<ImageItemModel>();
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         editTextSearchByName = findViewById(R.id.edit_text_search_by_name);
         editTextSearchById = findViewById(R.id.edit_text_search_by_id);
+        buttonSelectImagesRandomly = findViewById(R.id.button_select_randomly);
         recyclerView = findViewById(R.id.recycler_view);
         gridView = findViewById(R.id.grid_view);
 
@@ -83,6 +85,18 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 thread.start();
+            }
+        });
+
+        buttonSelectImagesRandomly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listOfSearchResult.size() < 40) {
+                    Toast.makeText(MainActivity.this,
+                            "Not enough items in search result",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
             }
         });
 

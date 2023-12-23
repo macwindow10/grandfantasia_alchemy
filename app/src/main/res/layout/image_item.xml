@@ -8,7 +8,8 @@
         android:id="@+id/button_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+"></Button>
+        android:text="+"
+        android:visibility="invisible"></Button>
 
     <ImageView
         android:id="@+id/image_view"
@@ -18,7 +19,8 @@
         android:id="@+id/text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0">
+        android:text="0"
+        android:visibility="invisible">
 
     </TextView>
 </LinearLayout>
