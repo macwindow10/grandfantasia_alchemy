@@ -50,8 +50,18 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.25"
-                    android:text="Select"></Button>
+                    android:text="Load"></Button>
+
             </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:min="0"
+                android:visibility="gone"></ProgressBar>
 
             <EditText
                 android:id="@+id/edit_text_search_by_name"
@@ -81,12 +91,16 @@
 
             </androidx.recyclerview.widget.RecyclerView>
 
+            <Button
+                android:id="@+id/button_select_randomly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Randomly"></Button>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Selected Images">
-
-            </TextView>
+                android:text="Selected Images"></TextView>
 
             <GridView
                 android:id="@+id/grid_view"

@@ -46,7 +46,7 @@ public class ImageItemAdapter extends ArrayAdapter<ImageItemModel> {
 
         try {
             if (imageItemModel.getIcon() != "") {
-                InputStream ims = context.getAssets().open(imageItemModel.getIcon());
+                InputStream ims = context.getAssets().open(imageItemModel.getIcon() + ".png");
                 Drawable d = Drawable.createFromStream(ims, null);
                 imageView.setImageDrawable(d);
             }

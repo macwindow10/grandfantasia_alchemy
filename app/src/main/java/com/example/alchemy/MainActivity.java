@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView textViewSelectFile;
     private Button buttonSelectFile;
+    private ProgressBar progressBar;
     private EditText editTextSearchByName;
     private EditText editTextSearchById;
     private RecyclerView recyclerView;
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         textViewSelectFile = findViewById(R.id.text_view_file);
         buttonSelectFile = findViewById(R.id.button_select_file);
+        progressBar = findViewById(R.id.progress_bar);
         editTextSearchByName = findViewById(R.id.edit_text_search_by_name);
         editTextSearchById = findViewById(R.id.edit_text_search_by_id);
         recyclerView = findViewById(R.id.recycler_view);
@@ -69,6 +72,10 @@ public class MainActivity extends AppCompatActivity {
         buttonSelectFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                buttonSelectFile.setEnabled(false);
+                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setProgress(10);
+
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -114,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i(TAG, s);
                 List<ImageItemModel> list = listAllImages
                         .stream()
-                        .filter(c -> c.getName().contains(s))
+                        .filter(c -> c.getName().toLowerCase().contains(s.toLowerCase()))
                         .collect(Collectors.toList());
                 Log.i(TAG, list.size() + "");
                 listOfSearchResult = new ArrayList<ImageItemModel>(list);
@@ -125,20 +132,38 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.setAdapter(searchItemAdapter);
             }
         });
-        /*
-        ImageView imageView = findViewById(R.id.image_view_1);
-        ImageView imageView2 = findViewById(R.id.image_view_2);
-        try {
-            InputStream ims = getAssets().open("A00001.png");
-            Drawable d = Drawable.createFromStream(ims, null);
-            imageView.setImageDrawable(d);
-            ims = getAssets().open("A00002.png");
-            d = Drawable.createFromStream(ims, null);
-            imageView2.setImageDrawable(d);
-        } catch (IOException ex) {
-            Log.e("I/O ERROR", "Failed when ...");
-        }*/
 
+        editTextSearchById.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String s = editable.toString();
+                if (s.length() < 3) {
+                    recyclerView.setVisibility(View.GONE);
+                    return;
+                }
+
+                List<ImageItemModel> list = listAllImages
+                        .stream()
+                        .filter(c -> c.getIcon().toLowerCase().contains(s.toLowerCase()))
+                        .collect(Collectors.toList());
+                listOfSearchResult = new ArrayList<ImageItemModel>(list);
+                if (listOfSearchResult.size() > 0) {
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+                searchItemAdapter = new SearchItemAdapter(MainActivity.this, listOfSearchResult);
+                recyclerView.setAdapter(searchItemAdapter);
+            }
+        });
     }
 
     @Override
@@ -206,6 +231,9 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    buttonSelectFile.setEnabled(true);
+                    progressBar.setProgress(0);
+                    progressBar.setVisibility(View.GONE);
                     imageItemAdapter.notifyDataSetChanged();
                 }
             });
