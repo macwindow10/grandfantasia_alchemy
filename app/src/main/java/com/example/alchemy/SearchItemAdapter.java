@@ -54,7 +54,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
         return arrayList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textViewId;
         public TextView textViewIcon;
         public TextView textViewName;
@@ -74,7 +74,8 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
                 @Override
                 public boolean onLongClick(View view) {
                     int position = getLayoutPosition();
-                    Toast.makeText(view.getContext(), "" + position, Toast.LENGTH_LONG).show();
+                    ((MainActivity)context).addInSelectedImagesList(arrayList.get(position));
+                    Toast.makeText(view.getContext(), "Item added", Toast.LENGTH_LONG).show();
                     return false;
                 }
             });

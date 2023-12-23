@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<ImageItemModel> listOfSearchResult = new ArrayList<ImageItemModel>();
     private SearchItemAdapter searchItemAdapter;
     private ImageItemAdapter imageItemAdapter;
+    private int currentPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(searchItemAdapter);
         if (listOfSearchResult.size() == 0) {
-            //recyclerView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
         } else {
             recyclerView.setVisibility(View.VISIBLE);
         }
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String s = editable.toString();
                 if (s.length() < 3) {
-                    //recyclerView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
                     return;
                 }
 
@@ -101,7 +102,8 @@ public class MainActivity extends AppCompatActivity {
                 if (listOfSearchResult.size() > 0) {
                     recyclerView.setVisibility(View.VISIBLE);
                 }
-                searchItemAdapter.notifyDataSetChanged();
+                searchItemAdapter = new SearchItemAdapter(MainActivity.this, listOfSearchResult);
+                recyclerView.setAdapter(searchItemAdapter);
             }
         });
         /*
@@ -172,16 +174,22 @@ public class MainActivity extends AppCompatActivity {
             imageItemModel.setValue(8);
             listAllImages.add(imageItemModel);
 
-
+            /*
             List<ImageItemModel> list = listAllImages
                     .stream()
                     .filter(c -> c.getName().contains("Big"))
                     .collect(Collectors.toList());
             listOfSearchResult = new ArrayList<ImageItemModel>(list);
             searchItemAdapter.notifyDataSetChanged();
+            */
 
         } catch (Exception exception) {
 
         }
+    }
+
+    public void addInSelectedImagesList(ImageItemModel imageItemModel) {
+        listSelectedImages.add(currentPosition, imageItemModel);
+        imageItemAdapter.notifyDataSetChanged();
     }
 }
