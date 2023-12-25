@@ -40,7 +40,8 @@
                     android:id="@+id/text_view_file"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:layout_weight="0.75"
                     android:text="Please select file">
 
@@ -50,7 +51,8 @@
                     android:id="@+id/button_select_file"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:layout_weight="0.25"
                     android:backgroundTint="@color/glaucous"
                     android:text="Load"></Button>
@@ -70,7 +72,8 @@
                 android:id="@+id/edit_text_search_by_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 android:hint="search images by name...">
 
             </EditText>
@@ -79,7 +82,8 @@
                 android:id="@+id/edit_text_search_by_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 android:hint="search images by id...">
 
             </EditText>
@@ -88,7 +92,8 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_margin="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 android:scrollbarAlwaysDrawVerticalTrack="true"
                 android:scrollbars="vertical">
 
@@ -97,14 +102,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/button_select_randomly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:backgroundTint="@color/teal"
                     android:text="Select Randomly"></Button>
 
@@ -112,7 +119,8 @@
                     android:id="@+id/button_save"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:backgroundTint="@color/cobalt_blue"
                     android:text="Save"></Button>
 
@@ -120,23 +128,25 @@
                     android:id="@+id/button_reset"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:backgroundTint="@color/red"
                     android:text="Reset"></Button>
             </LinearLayout>
-
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 android:text="Selected Images"></TextView>
 
             <GridView
                 android:id="@+id/grid_view"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-                android:layout_margin="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 android:gravity="center"
                 android:horizontalSpacing="8dp"
                 android:nestedScrollingEnabled="true"
@@ -187,8 +197,7 @@
                 </TableRow>
 
             </TableLayout>
-
-
+            
         </LinearLayout>
     </ScrollView>
 

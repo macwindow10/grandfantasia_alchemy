@@ -24,10 +24,21 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -96,24 +107,42 @@ public class MainActivity extends AppCompatActivity {
         buttonSelectImagesRandomly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (listOfSearchResult.size() < 40) {
+                boolean filtered = (editTextSearchByName.getText().toString().length() > 0 ||
+                        editTextSearchById.getText().toString().length() > 0);
+                if (filtered && listOfSearchResult.size() < 40) {
                     Toast.makeText(MainActivity.this,
                             "Not enough items in search result",
                             Toast.LENGTH_LONG).show();
                     return;
                 }
+
                 ImageItemModel imageItemModel;
-                int min = 0;
-                int max = listOfSearchResult.size() - 1;
+                int min;
+                int max;
                 int random;
                 int i;
-                currentPosition = 0;
-                for (i = 0; i < 40; i++) {
-                    random = new Random().nextInt((max - min) + 1) + min;
-                    imageItemModel = listOfSearchResult.get(random);
-                    listSelectedImages.set(currentPosition, imageItemModel);
-                    currentPosition++;
+                if (filtered) {
+                    min = 0;
+                    max = listOfSearchResult.size() - 1;
+                    currentPosition = 0;
+                    for (i = 0; i < 40; i++) {
+                        random = new Random().nextInt((max - min) + 1) + min;
+                        imageItemModel = listOfSearchResult.get(random);
+                        listSelectedImages.set(currentPosition, imageItemModel);
+                        currentPosition++;
+                    }
+                } else {
+                    min = 0;
+                    max = listAllImages.size() - 1;
+                    currentPosition = 0;
+                    for (i = 0; i < 40; i++) {
+                        random = new Random().nextInt((max - min) + 1) + min;
+                        imageItemModel = listAllImages.get(random);
+                        listSelectedImages.set(currentPosition, imageItemModel);
+                        currentPosition++;
+                    }
                 }
+
                 imageItemAdapter.notifyDataSetChanged();
             }
         });
@@ -121,19 +150,58 @@ public class MainActivity extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (listSelectedImages.size() != 40) {
+                if (currentPosition < 40) {
                     Toast.makeText(MainActivity.this,
                             "Not enough items in grid",
                             Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                String s = "INSERT INTO high_lottery (lottery_id, item_index, \"week\", \"round\", item_id, item_amount, probability, num_replay, bulletin, probability_plus1, probability_plus2, probability_plus3, highlight, jackpot) VALUES";
-                int i;
-                for (i = 0; i < listSelectedImages.size(); i++) {
+                ImageItemModel imageItemModel = null;
+                FileOutputStream fileOutputStream = null;
+                OutputStreamWriter outputStreamWriter = null;
+                String path = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+                SimpleDateFormat sdf;
+                try {
+                    sdf = new SimpleDateFormat("yyyyMMdd_HHmm", Locale.getDefault());
+                    String dt = sdf.format(new Date());
+                    String filename = String.format("output_%s.txt", dt);
+                    fileOutputStream = new FileOutputStream(new File(path, filename));
+                    outputStreamWriter = new OutputStreamWriter(fileOutputStream);
+                    String s = "INSERT INTO high_lottery (lottery_id, item_index, \"week\", \"round\", item_id, item_amount, probability, num_replay, bulletin, probability_plus1, probability_plus2, probability_plus3, highlight, jackpot) VALUES";
+                    outputStreamWriter.write(s + "\n");
+                    int i;
+                    int itemIndex = 1;
+                    int week = 3;
+                    int round = 1;
+                    for (i = 0; i < listSelectedImages.size(); i++) {
+                        imageItemModel = listSelectedImages.get(i);
+                        s = String.format("(40362, %d, %d, %d, %s, %d, 1, -1, 0.94, 0.70, 0.78, 0, 0),",
+                                itemIndex, week, round, imageItemModel.getId(),
+                                imageItemModel.getValue());
+                        outputStreamWriter.write(s + "\n");
 
+                        if (((i + 1) % 8) == 0) {
+                            round++;
+                        }
+
+                        itemIndex++;
+                        if (itemIndex == 9) {
+                            itemIndex = 1;
+                        }
+                    }
+                    Toast.makeText(MainActivity.this, "Output file saved in Downloads", Toast.LENGTH_LONG).show();
+                } catch (Exception exception) {
+                    Log.e(TAG, "savefile::", exception);
+                } finally {
+                    if (outputStreamWriter != null) {
+                        try {
+                            outputStreamWriter.close();
+                        } catch (IOException e) {
+                            Log.e(TAG, "savefile::", e);
+                        }
+                    }
                 }
-
             }
         });
 
@@ -230,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
 
                 List<ImageItemModel> list = listAllImages
                         .stream()
-                        .filter(c -> c.getIcon().toLowerCase().contains(s.toLowerCase()))
+                        .filter(c -> c.getId().toLowerCase().contains(s.toLowerCase()))
                         .collect(Collectors.toList());
                 listOfSearchResult = new ArrayList<ImageItemModel>(list);
                 if (listOfSearchResult.size() > 0) {
@@ -315,7 +383,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
         } catch (Exception exception) {
-
+            Log.e(TAG, "populateLists", exception);
         }
     }
 
