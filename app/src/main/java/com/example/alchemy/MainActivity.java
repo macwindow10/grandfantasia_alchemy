@@ -121,12 +121,19 @@ public class MainActivity extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (listSelectedImages.size() < 40) {
+                if (listSelectedImages.size() != 40) {
                     Toast.makeText(MainActivity.this,
-                            "Not enough items in result",
+                            "Not enough items in grid",
                             Toast.LENGTH_LONG).show();
                     return;
                 }
+
+                String s = "INSERT INTO high_lottery (lottery_id, item_index, \"week\", \"round\", item_id, item_amount, probability, num_replay, bulletin, probability_plus1, probability_plus2, probability_plus3, highlight, jackpot) VALUES";
+                int i;
+                for (i = 0; i < listSelectedImages.size(); i++) {
+
+                }
+
             }
         });
 

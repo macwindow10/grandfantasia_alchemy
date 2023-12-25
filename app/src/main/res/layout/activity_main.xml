@@ -40,6 +40,7 @@
                     android:id="@+id/text_view_file"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
                     android:layout_weight="0.75"
                     android:text="Please select file">
 
@@ -49,6 +50,7 @@
                     android:id="@+id/button_select_file"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
                     android:layout_weight="0.25"
                     android:backgroundTint="@color/glaucous"
                     android:text="Load"></Button>
@@ -127,6 +129,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
                 android:text="Selected Images"></TextView>
 
             <GridView
