@@ -28,6 +28,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextSearchByName;
     private EditText editTextSearchById;
     private Button buttonSelectImagesRandomly;
+    private Button buttonSave;
+    private Button buttonReset;
     private RecyclerView recyclerView;
     private GridView gridView;
     private ArrayList<ImageItemModel> listAllImages = new ArrayList<ImageItemModel>();
@@ -65,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         editTextSearchByName = findViewById(R.id.edit_text_search_by_name);
         editTextSearchById = findViewById(R.id.edit_text_search_by_id);
         buttonSelectImagesRandomly = findViewById(R.id.button_select_randomly);
+        buttonSave = findViewById(R.id.button_save);
+        buttonReset = findViewById(R.id.button_reset);
         recyclerView = findViewById(R.id.recycler_view);
         gridView = findViewById(R.id.grid_view);
 
@@ -97,6 +102,55 @@ public class MainActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
                     return;
                 }
+                ImageItemModel imageItemModel;
+                int min = 0;
+                int max = listOfSearchResult.size() - 1;
+                int random;
+                int i;
+                currentPosition = 0;
+                for (i = 0; i < 40; i++) {
+                    random = new Random().nextInt((max - min) + 1) + min;
+                    imageItemModel = listOfSearchResult.get(random);
+                    listSelectedImages.set(currentPosition, imageItemModel);
+                    currentPosition++;
+                }
+                imageItemAdapter.notifyDataSetChanged();
+            }
+        });
+
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listSelectedImages.size() < 40) {
+                    Toast.makeText(MainActivity.this,
+                            "Not enough items in result",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        });
+
+        buttonReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ImageItemModel imageItemModel;
+
+                editTextSearchByName.setText("");
+                editTextSearchById.setText("");
+                currentPosition = 0;
+                listOfSearchResult.clear();
+                listSelectedImages.clear();
+                for (int i = 0; i < 40; i++) {
+                    imageItemModel = new ImageItemModel("");
+                    imageItemModel.setId("");
+                    imageItemModel.setName("");
+                    imageItemModel.setValue(0);
+                    listSelectedImages.add(imageItemModel);
+                }
+
+                imageItemAdapter.notifyDataSetChanged();
+                searchItemAdapter = new SearchItemAdapter(MainActivity.this, listOfSearchResult);
+                recyclerView.setAdapter(searchItemAdapter);
             }
         });
 
@@ -251,41 +305,6 @@ public class MainActivity extends AppCompatActivity {
                     imageItemAdapter.notifyDataSetChanged();
                 }
             });
-
-            /*
-            imageItemModel = new ImageItemModel("A00001.png");
-            imageItemModel.setId("10266");
-            imageItemModel.setName("Big Boss Winn's Request Reward I");
-            imageItemModel.setValue(8);
-            listAllImages.add(imageItemModel);
-
-            imageItemModel = new ImageItemModel("A00001.png");
-            imageItemModel.setId("10267");
-            imageItemModel.setName("Big Boss Winn's Request Reward II");
-            imageItemModel.setValue(8);
-            listAllImages.add(imageItemModel);
-
-            imageItemModel = new ImageItemModel("A00001.png");
-            imageItemModel.setId("10268");
-            imageItemModel.setName("Big Boss Winn's Request Reward III");
-            imageItemModel.setValue(8);
-            listAllImages.add(imageItemModel);
-
-            imageItemModel = new ImageItemModel("A00001.png");
-            imageItemModel.setId("10269");
-            imageItemModel.setName("Big Boss Winn's Request Reward IV");
-            imageItemModel.setValue(8);
-            listAllImages.add(imageItemModel);
-            */
-
-            /*
-            List<ImageItemModel> list = listAllImages
-                    .stream()
-                    .filter(c -> c.getName().contains("Big"))
-                    .collect(Collectors.toList());
-            listOfSearchResult = new ArrayList<ImageItemModel>(list);
-            searchItemAdapter.notifyDataSetChanged();
-            */
 
         } catch (Exception exception) {
 
