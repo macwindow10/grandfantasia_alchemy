@@ -107,12 +107,15 @@ public class MainActivity extends AppCompatActivity {
         buttonSelectImagesRandomly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (listAllImages.size() == 0) {
+                    Toast.makeText(MainActivity.this, "Please load file", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 boolean filtered = (editTextSearchByName.getText().toString().length() > 0 ||
                         editTextSearchById.getText().toString().length() > 0);
                 if (filtered && listOfSearchResult.size() < 40) {
-                    Toast.makeText(MainActivity.this,
-                            "Not enough items in search result",
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Not enough items in search result", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -329,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
     private void populateLists() {
         ImageItemModel imageItemModel;
         try {
-
+            listSelectedImages.clear();
             for (int i = 0; i < 40; i++) {
                 imageItemModel = new ImageItemModel("");
                 imageItemModel.setId("");
