@@ -147,10 +147,11 @@ public class MainActivity extends AppCompatActivity {
                     imageItemModel.setValue(0);
                     listSelectedImages.add(imageItemModel);
                 }
-
-                imageItemAdapter.notifyDataSetChanged();
                 searchItemAdapter = new SearchItemAdapter(MainActivity.this, listOfSearchResult);
                 recyclerView.setAdapter(searchItemAdapter);
+
+                imageItemAdapter = new ImageItemAdapter(MainActivity.this, listSelectedImages);
+                gridView.setAdapter(imageItemAdapter);
             }
         });
 
