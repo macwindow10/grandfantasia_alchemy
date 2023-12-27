@@ -74,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
+                android:enabled="false"
                 android:hint="search images by name...">
 
             </EditText>
@@ -84,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
+                android:enabled="false"
                 android:hint="search images by id...">
 
             </EditText>
@@ -99,48 +101,56 @@
                     android:id="@+id/checkbox1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:text="1"></CheckBox>
 
                 <CheckBox
                     android:id="@+id/checkbox2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:text="2"></CheckBox>
 
                 <CheckBox
                     android:id="@+id/checkbox3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:text="3"></CheckBox>
 
                 <CheckBox
                     android:id="@+id/checkbox4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:text="4"></CheckBox>
 
                 <CheckBox
                     android:id="@+id/checkbox5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:text="5"></CheckBox>
 
                 <CheckBox
                     android:id="@+id/checkbox6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:text="6"></CheckBox>
 
                 <CheckBox
                     android:id="@+id/checkbox7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:text="7"></CheckBox>
 
                 <CheckBox
                     android:id="@+id/checkbox8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:text="8"></CheckBox>
             </LinearLayout>
 
@@ -155,42 +165,49 @@
                     android:id="@+id/checkbox9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:text="9"></CheckBox>
 
                 <CheckBox
                     android:id="@+id/checkbox10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:text="10"></CheckBox>
 
                 <CheckBox
                     android:id="@+id/checkbox11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:text="11"></CheckBox>
 
                 <CheckBox
                     android:id="@+id/checkbox12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:text="12"></CheckBox>
 
                 <CheckBox
                     android:id="@+id/checkbox13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:text="13"></CheckBox>
 
                 <CheckBox
                     android:id="@+id/checkbox14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:text="14"></CheckBox>
 
                 <CheckBox
                     android:id="@+id/checkbox15"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:text="15"></CheckBox>
             </LinearLayout>
 
@@ -219,6 +236,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
                     android:backgroundTint="@color/teal"
+                    android:enabled="false"
                     android:text="Select Randomly"></Button>
 
                 <Button
@@ -228,6 +246,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
                     android:backgroundTint="@color/cobalt_blue"
+                    android:enabled="false"
                     android:text="Save"></Button>
 
                 <Button
@@ -237,6 +256,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
                     android:backgroundTint="@color/red"
+                    android:enabled="false"
                     android:text="Reset"></Button>
             </LinearLayout>
 

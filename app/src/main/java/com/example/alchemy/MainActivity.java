@@ -1,16 +1,27 @@
 package com.example.alchemy;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.os.Build.VERSION.SDK_INT;
+
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.os.Environment;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -47,6 +58,8 @@ import java.util.stream.Collectors;
 public class MainActivity extends AppCompatActivity {
 
     private static String TAG = MainActivity.class.getName();
+
+    private int PERMISSION_REQUEST_CODE = 10001;
     private AppBarConfiguration appBarConfiguration;
     private Toolbar toolbar;
     private TextView textViewSelectFile;
@@ -346,6 +359,29 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.setAdapter(searchItemAdapter);
             }
         });
+
+        if (!checkPermission()) {
+            if (SDK_INT >= Build.VERSION_CODES.R) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                startActivity(intent);
+            } else {
+                // below android 11
+                startActivity(new Intent(this, MainActivity.class));
+                ActivityCompat.requestPermissions(this, new String[]{WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
+
+    private boolean checkPermission() {
+        if (SDK_INT >= Build.VERSION_CODES.R) {
+            return Environment.isExternalStorageManager();
+        } else {
+            int result = ContextCompat.checkSelfPermission(MainActivity.this, READ_EXTERNAL_STORAGE);
+            int result1 = ContextCompat.checkSelfPermission(MainActivity.this, WRITE_EXTERNAL_STORAGE);
+            return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED;
+        }
     }
 
     @Override
@@ -364,6 +400,29 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void enableControls() {
+        editTextSearchByName.setEnabled(true);
+        editTextSearchById.setEnabled(true);
+        checkBox1.setEnabled(true);
+        checkBox2.setEnabled(true);
+        checkBox3.setEnabled(true);
+        checkBox4.setEnabled(true);
+        checkBox5.setEnabled(true);
+        checkBox6.setEnabled(true);
+        checkBox7.setEnabled(true);
+        checkBox8.setEnabled(true);
+        checkBox9.setEnabled(true);
+        checkBox10.setEnabled(true);
+        checkBox11.setEnabled(true);
+        checkBox12.setEnabled(true);
+        checkBox13.setEnabled(true);
+        checkBox14.setEnabled(true);
+        checkBox15.setEnabled(true);
+        buttonSelectImagesRandomly.setEnabled(true);
+        buttonSave.setEnabled(true);
+        buttonReset.setEnabled(true);
+    }
+
     private CompoundButton.OnCheckedChangeListener OnCheckChanged = new CompoundButton.OnCheckedChangeListener() {
 
         @Override
@@ -376,32 +435,106 @@ public class MainActivity extends AppCompatActivity {
                         .stream()
                         .filter(c -> c.getValue() == 1)
                         .collect(Collectors.toList());
+                listFilteredOnLastColumnImages = new ArrayList<>(list);
             }
             if (compoundButton.getId() == R.id.checkbox2 && b) {
                 list = listFilteredOnLastColumnImages
                         .stream()
                         .filter(c -> c.getValue() == 2)
                         .collect(Collectors.toList());
+                listFilteredOnLastColumnImages = new ArrayList<>(list);
             }
             if (compoundButton.getId() == R.id.checkbox3 && b) {
                 list = listFilteredOnLastColumnImages
                         .stream()
                         .filter(c -> c.getValue() == 3)
                         .collect(Collectors.toList());
+                listFilteredOnLastColumnImages = new ArrayList<>(list);
             }
-            if (compoundButton.getId() == R.id.checkbox4) {
+            if (compoundButton.getId() == R.id.checkbox4 && b) {
                 list = listFilteredOnLastColumnImages
                         .stream()
                         .filter(c -> c.getValue() == 4)
                         .collect(Collectors.toList());
+                listFilteredOnLastColumnImages = new ArrayList<>(list);
             }
-            if (compoundButton.getId() == R.id.checkbox5) {
+            if (compoundButton.getId() == R.id.checkbox5 && b) {
                 list = listFilteredOnLastColumnImages
                         .stream()
                         .filter(c -> c.getValue() == 5)
                         .collect(Collectors.toList());
+                listFilteredOnLastColumnImages = new ArrayList<>(list);
             }
-            listFilteredOnLastColumnImages = new ArrayList<>(list);
+            if (compoundButton.getId() == R.id.checkbox6 && b) {
+                list = listFilteredOnLastColumnImages
+                        .stream()
+                        .filter(c -> c.getValue() == 6)
+                        .collect(Collectors.toList());
+                listFilteredOnLastColumnImages = new ArrayList<>(list);
+            }
+            if (compoundButton.getId() == R.id.checkbox7 && b) {
+                list = listFilteredOnLastColumnImages
+                        .stream()
+                        .filter(c -> c.getValue() == 7)
+                        .collect(Collectors.toList());
+                listFilteredOnLastColumnImages = new ArrayList<>(list);
+            }
+            if (compoundButton.getId() == R.id.checkbox8 && b) {
+                list = listFilteredOnLastColumnImages
+                        .stream()
+                        .filter(c -> c.getValue() == 8)
+                        .collect(Collectors.toList());
+                listFilteredOnLastColumnImages = new ArrayList<>(list);
+            }
+            if (compoundButton.getId() == R.id.checkbox9 && b) {
+                list = listFilteredOnLastColumnImages
+                        .stream()
+                        .filter(c -> c.getValue() == 9)
+                        .collect(Collectors.toList());
+                listFilteredOnLastColumnImages = new ArrayList<>(list);
+            }
+            if (compoundButton.getId() == R.id.checkbox10 && b) {
+                list = listFilteredOnLastColumnImages
+                        .stream()
+                        .filter(c -> c.getValue() == 10)
+                        .collect(Collectors.toList());
+                listFilteredOnLastColumnImages = new ArrayList<>(list);
+            }
+            if (compoundButton.getId() == R.id.checkbox11 && b) {
+                list = listFilteredOnLastColumnImages
+                        .stream()
+                        .filter(c -> c.getValue() == 11)
+                        .collect(Collectors.toList());
+                listFilteredOnLastColumnImages = new ArrayList<>(list);
+            }
+            if (compoundButton.getId() == R.id.checkbox12 && b) {
+                list = listFilteredOnLastColumnImages
+                        .stream()
+                        .filter(c -> c.getValue() == 12)
+                        .collect(Collectors.toList());
+                listFilteredOnLastColumnImages = new ArrayList<>(list);
+            }
+            if (compoundButton.getId() == R.id.checkbox13 && b) {
+                list = listFilteredOnLastColumnImages
+                        .stream()
+                        .filter(c -> c.getValue() == 13)
+                        .collect(Collectors.toList());
+                listFilteredOnLastColumnImages = new ArrayList<>(list);
+            }
+            if (compoundButton.getId() == R.id.checkbox14 && b) {
+                list = listFilteredOnLastColumnImages
+                        .stream()
+                        .filter(c -> c.getValue() == 14)
+                        .collect(Collectors.toList());
+                listFilteredOnLastColumnImages = new ArrayList<>(list);
+            }
+            if (compoundButton.getId() == R.id.checkbox15 && b) {
+                list = listFilteredOnLastColumnImages
+                        .stream()
+                        .filter(c -> c.getValue() == 15)
+                        .collect(Collectors.toList());
+                listFilteredOnLastColumnImages = new ArrayList<>(list);
+            }
         }
     };
 
@@ -456,7 +589,8 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    buttonSelectFile.setEnabled(true);
+                    enableControls();
+
                     progressBar.setProgress(0);
                     progressBar.setVisibility(View.GONE);
                     imageItemAdapter.notifyDataSetChanged();
