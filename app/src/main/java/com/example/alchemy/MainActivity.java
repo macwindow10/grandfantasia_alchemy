@@ -18,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ProgressBar;
@@ -52,12 +54,16 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private EditText editTextSearchByName;
     private EditText editTextSearchById;
+    private CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5;
+    private CheckBox checkBox6, checkBox7, checkBox8, checkBox9, checkBox10;
+    private CheckBox checkBox11, checkBox12, checkBox13, checkBox14, checkBox15;
     private Button buttonSelectImagesRandomly;
     private Button buttonSave;
     private Button buttonReset;
     private RecyclerView recyclerView;
     private GridView gridView;
     private ArrayList<ImageItemModel> listAllImages = new ArrayList<ImageItemModel>();
+    private ArrayList<ImageItemModel> listFilteredOnLastColumnImages = new ArrayList<ImageItemModel>();
     private ArrayList<ImageItemModel> listSelectedImages = new ArrayList<ImageItemModel>();
     private ArrayList<ImageItemModel> listOfSearchResult = new ArrayList<ImageItemModel>();
     private SearchItemAdapter searchItemAdapter;
@@ -78,6 +84,21 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         editTextSearchByName = findViewById(R.id.edit_text_search_by_name);
         editTextSearchById = findViewById(R.id.edit_text_search_by_id);
+        checkBox1 = findViewById(R.id.checkbox1);
+        checkBox2 = findViewById(R.id.checkbox2);
+        checkBox3 = findViewById(R.id.checkbox3);
+        checkBox4 = findViewById(R.id.checkbox4);
+        checkBox5 = findViewById(R.id.checkbox5);
+        checkBox6 = findViewById(R.id.checkbox6);
+        checkBox7 = findViewById(R.id.checkbox7);
+        checkBox8 = findViewById(R.id.checkbox8);
+        checkBox9 = findViewById(R.id.checkbox9);
+        checkBox10 = findViewById(R.id.checkbox10);
+        checkBox11 = findViewById(R.id.checkbox11);
+        checkBox12 = findViewById(R.id.checkbox12);
+        checkBox13 = findViewById(R.id.checkbox13);
+        checkBox14 = findViewById(R.id.checkbox14);
+        checkBox15 = findViewById(R.id.checkbox15);
         buttonSelectImagesRandomly = findViewById(R.id.button_select_randomly);
         buttonSave = findViewById(R.id.button_save);
         buttonReset = findViewById(R.id.button_reset);
@@ -86,6 +107,22 @@ public class MainActivity extends AppCompatActivity {
 
         String path = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
         textViewSelectFile.setText(path + "/Local DB TW.txt");
+
+        checkBox1.setOnCheckedChangeListener(OnCheckChanged);
+        checkBox2.setOnCheckedChangeListener(OnCheckChanged);
+        checkBox3.setOnCheckedChangeListener(OnCheckChanged);
+        checkBox4.setOnCheckedChangeListener(OnCheckChanged);
+        checkBox5.setOnCheckedChangeListener(OnCheckChanged);
+        checkBox6.setOnCheckedChangeListener(OnCheckChanged);
+        checkBox7.setOnCheckedChangeListener(OnCheckChanged);
+        checkBox8.setOnCheckedChangeListener(OnCheckChanged);
+        checkBox9.setOnCheckedChangeListener(OnCheckChanged);
+        checkBox10.setOnCheckedChangeListener(OnCheckChanged);
+        checkBox11.setOnCheckedChangeListener(OnCheckChanged);
+        checkBox12.setOnCheckedChangeListener(OnCheckChanged);
+        checkBox13.setOnCheckedChangeListener(OnCheckChanged);
+        checkBox14.setOnCheckedChangeListener(OnCheckChanged);
+        checkBox15.setOnCheckedChangeListener(OnCheckChanged);
 
         buttonSelectFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -265,12 +302,10 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                Log.i(TAG, s);
-                List<ImageItemModel> list = listAllImages
+                List<ImageItemModel> list = listFilteredOnLastColumnImages
                         .stream()
                         .filter(c -> c.getName().toLowerCase().contains(s.toLowerCase()))
                         .collect(Collectors.toList());
-                Log.i(TAG, list.size() + "");
                 listOfSearchResult = new ArrayList<ImageItemModel>(list);
                 if (listOfSearchResult.size() > 0) {
                     recyclerView.setVisibility(View.VISIBLE);
@@ -299,7 +334,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                List<ImageItemModel> list = listAllImages
+                List<ImageItemModel> list = listFilteredOnLastColumnImages
                         .stream()
                         .filter(c -> c.getId().toLowerCase().contains(s.toLowerCase()))
                         .collect(Collectors.toList());
@@ -328,6 +363,47 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private CompoundButton.OnCheckedChangeListener OnCheckChanged = new CompoundButton.OnCheckedChangeListener() {
+
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            listFilteredOnLastColumnImages.clear();
+            listFilteredOnLastColumnImages.addAll(listAllImages);
+            List<ImageItemModel> list = new ArrayList<>();
+            if (compoundButton.getId() == R.id.checkbox1 && b) {
+                list = listFilteredOnLastColumnImages
+                        .stream()
+                        .filter(c -> c.getValue() == 1)
+                        .collect(Collectors.toList());
+            }
+            if (compoundButton.getId() == R.id.checkbox2 && b) {
+                list = listFilteredOnLastColumnImages
+                        .stream()
+                        .filter(c -> c.getValue() == 2)
+                        .collect(Collectors.toList());
+            }
+            if (compoundButton.getId() == R.id.checkbox3 && b) {
+                list = listFilteredOnLastColumnImages
+                        .stream()
+                        .filter(c -> c.getValue() == 3)
+                        .collect(Collectors.toList());
+            }
+            if (compoundButton.getId() == R.id.checkbox4) {
+                list = listFilteredOnLastColumnImages
+                        .stream()
+                        .filter(c -> c.getValue() == 4)
+                        .collect(Collectors.toList());
+            }
+            if (compoundButton.getId() == R.id.checkbox5) {
+                list = listFilteredOnLastColumnImages
+                        .stream()
+                        .filter(c -> c.getValue() == 5)
+                        .collect(Collectors.toList());
+            }
+            listFilteredOnLastColumnImages = new ArrayList<>(list);
+        }
+    };
 
     private void populateLists() {
         ImageItemModel imageItemModel;
@@ -373,6 +449,8 @@ public class MainActivity extends AppCompatActivity {
                     r.close();
                 }
             }
+            // clone list
+            listFilteredOnLastColumnImages.addAll(listAllImages);
             Log.i(TAG, "reading file::finished");
 
             MainActivity.this.runOnUiThread(new Runnable() {
