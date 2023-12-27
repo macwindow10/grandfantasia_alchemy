@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                     int round = 1;
                     for (i = 0; i < listSelectedImages.size(); i++) {
                         imageItemModel = listSelectedImages.get(i);
-                        s = String.format("(40362, %d, %d, %d, %s, %d, 1, -1, 0.94, 0.70, 0.78, 0, 0),",
+                        s = String.format("(40362, %d, %d, %d, %s, %d, 12, 1, -1, 0.94, 0.70, 0.78, 0, 0),",
                                 itemIndex, week, round, imageItemModel.getId(),
                                 imageItemModel.getValue());
                         outputStreamWriter.write(s + "\n");
