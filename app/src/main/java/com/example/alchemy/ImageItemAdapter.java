@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,7 +43,7 @@ public class ImageItemAdapter extends ArrayAdapter<ImageItemModel> {
         ImageItemModel imageItemModel = getItem(position);
         Button button = listItemView.findViewById(R.id.button_select);
         ImageView imageView = listItemView.findViewById(R.id.image_view);
-        TextView textView = listItemView.findViewById(R.id.text_view);
+        EditText editText = listItemView.findViewById(R.id.edit_view_quantity);
 
         try {
             if (imageItemModel.getIcon() != "") {
@@ -53,7 +54,7 @@ public class ImageItemAdapter extends ArrayAdapter<ImageItemModel> {
         } catch (IOException ex) {
             Log.e(TAG, "Failed when ...");
         }
-        textView.setText("Q: " + imageItemModel.getQuantity());
+        //editText.setText(imageItemModel.getQuantity());
 
         return listItemView;
     }

@@ -216,6 +216,9 @@ public class MainActivity extends AppCompatActivity {
                 String path = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
                 SimpleDateFormat sdf;
                 try {
+
+                    populateQuantityInSelectedImages();
+
                     sdf = new SimpleDateFormat("yyyyMMdd_HHmm", Locale.getDefault());
                     String dt = sdf.format(new Date());
                     String filename = String.format("output_%s.txt", dt);
@@ -231,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
                         imageItemModel = listSelectedImages.get(i);
                         s = String.format("(40362, %d, %d, %d, %s, %d, 12, 1, -1, 0.94, 0.70, 0.78, 0, 0),",
                                 itemIndex, week, round, imageItemModel.getId(),
-                                imageItemModel.getValue());
+                                imageItemModel.getQuantity());
                         outputStreamWriter.write(s + "\n");
 
                         if (((i + 1) % 8) == 0) {
@@ -599,6 +602,23 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (Exception exception) {
             Log.e(TAG, "populateLists", exception);
+        }
+    }
+
+    private void populateQuantityInSelectedImages() {
+        try {
+            int x = gridView.getChildCount();
+            for (int i = 0; i < x; ++i) {
+                View holder = gridView.getChildAt(i);
+                EditText editText = holder.findViewById(R.id.edit_view_quantity);
+                try {
+                    listSelectedImages.get(i).setQuantity(Integer.parseInt(editText.getText().toString()));
+                } catch (Exception exception2) {
+
+                }
+            }
+        } catch (Exception exception) {
+            Log.e(TAG, "populateQuantityInSelectedImages::", exception);
         }
     }
 

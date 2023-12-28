@@ -13,7 +13,7 @@ public class ImageItemModel {
         this.icon = icon;
         this.name = "";
         this.value = 0;
-        this.quantity = 0;
+        this.quantity = 1;
     }
 
     public String getId() {
