@@ -321,6 +321,7 @@ public class MainActivity extends AppCompatActivity {
                 String s = editable.toString();
                 if (s.length() == 0) {
                     recyclerView.setVisibility(View.GONE);
+                    textViewSearchResultImagesCount.setText("Search result images count: 0");
                     return;
                 }
                 searchByName(s);
@@ -342,6 +343,7 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String s = editable.toString();
                 if (s.length() == 0) {
+                    textViewSearchResultImagesCount.setText("Search result images count: 0");
                     recyclerView.setVisibility(View.GONE);
                     return;
                 }
@@ -534,6 +536,8 @@ public class MainActivity extends AppCompatActivity {
                 searchByName(editTextSearchByName.getText().toString());
             } else if (editTextSearchById.getText().toString().length() > 0) {
                 searchById(editTextSearchById.getText().toString());
+            } else {
+
             }
         }
     };
