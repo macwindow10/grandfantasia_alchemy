@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5;
     private CheckBox checkBox6, checkBox7, checkBox8, checkBox9, checkBox10;
     private CheckBox checkBox11, checkBox12, checkBox13, checkBox14, checkBox15;
+    private TextView textViewSearchResultImagesCount;
     private Button buttonSelectImagesRandomly;
     private Button buttonSave;
     private Button buttonReset;
@@ -112,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         checkBox13 = findViewById(R.id.checkbox13);
         checkBox14 = findViewById(R.id.checkbox14);
         checkBox15 = findViewById(R.id.checkbox15);
+        textViewSearchResultImagesCount = findViewById(R.id.text_view_search_result_images_count);
         buttonSelectImagesRandomly = findViewById(R.id.button_select_randomly);
         buttonSave = findViewById(R.id.button_save);
         buttonReset = findViewById(R.id.button_reset);
@@ -162,9 +164,10 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                boolean filtered = (editTextSearchByName.getText().toString().length() > 0 ||
-                        editTextSearchById.getText().toString().length() > 0);
-                if (filtered && listOfSearchResult.size() < 40) {
+                boolean filtered =
+                        (editTextSearchByName.getText().toString().length() > 0 ||
+                                editTextSearchById.getText().toString().length() > 0);
+                if (listOfSearchResult.size() < 40) {
                     Toast.makeText(MainActivity.this, "Not enough items in search result", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -230,11 +233,14 @@ public class MainActivity extends AppCompatActivity {
                     int itemIndex = 1;
                     int week = 3;
                     int round = 1;
+                    int probability = 12;
+                    int num_replay = 1;
+                    int bulletin = 0;
                     for (i = 0; i < listSelectedImages.size(); i++) {
                         imageItemModel = listSelectedImages.get(i);
-                        s = String.format("(40362, %d, %d, %d, %s, %d, 12, 1, -1, 0.94, 0.70, 0.78, 0, 0),",
+                        s = String.format("(40362, %d, %d, %d, %s, %d, 12, 1, %d, 0.94, 0.70, 0.78, 0, 0),",
                                 itemIndex, week, round, imageItemModel.getId(),
-                                imageItemModel.getQuantity());
+                                imageItemModel.getQuantity(), bulletin);
                         outputStreamWriter.write(s + "\n");
 
                         if (((i + 1) % 8) == 0) {
@@ -313,21 +319,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 String s = editable.toString();
-                if (s.length() < 3) {
+                if (s.length() == 0) {
                     recyclerView.setVisibility(View.GONE);
                     return;
                 }
-
-                List<ImageItemModel> list = listFilteredOnLastColumnImages
-                        .stream()
-                        .filter(c -> c.getName().toLowerCase().contains(s.toLowerCase()))
-                        .collect(Collectors.toList());
-                listOfSearchResult = new ArrayList<ImageItemModel>(list);
-                if (listOfSearchResult.size() > 0) {
-                    recyclerView.setVisibility(View.VISIBLE);
-                }
-                searchItemAdapter = new SearchItemAdapter(MainActivity.this, listOfSearchResult);
-                recyclerView.setAdapter(searchItemAdapter);
+                searchByName(s);
             }
         });
 
@@ -345,21 +341,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 String s = editable.toString();
-                if (s.length() < 3) {
+                if (s.length() == 0) {
                     recyclerView.setVisibility(View.GONE);
                     return;
                 }
-
-                List<ImageItemModel> list = listFilteredOnLastColumnImages
-                        .stream()
-                        .filter(c -> c.getId().toLowerCase().contains(s.toLowerCase()))
-                        .collect(Collectors.toList());
-                listOfSearchResult = new ArrayList<ImageItemModel>(list);
-                if (listOfSearchResult.size() > 0) {
-                    recyclerView.setVisibility(View.VISIBLE);
-                }
-                searchItemAdapter = new SearchItemAdapter(MainActivity.this, listOfSearchResult);
-                recyclerView.setAdapter(searchItemAdapter);
+                searchById(s);
             }
         });
 
@@ -538,8 +524,44 @@ public class MainActivity extends AppCompatActivity {
                         .collect(Collectors.toList());
                 listFilteredOnLastColumnImages = new ArrayList<>(list);
             }
+
+            if (editTextSearchByName.getText().toString().length() > 0) {
+                searchByName(editTextSearchByName.getText().toString());
+            } else if (editTextSearchById.getText().toString().length() > 0) {
+                searchById(editTextSearchById.getText().toString());
+            }
         }
     };
+
+    private void searchByName(String s) {
+        List<ImageItemModel> list = listFilteredOnLastColumnImages
+                .stream()
+                .filter(c -> c.getName().toLowerCase().contains(s.toLowerCase()))
+                .collect(Collectors.toList());
+        listOfSearchResult = new ArrayList<ImageItemModel>(list);
+        if (listOfSearchResult.size() > 0) {
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+        searchItemAdapter = new SearchItemAdapter(MainActivity.this, listOfSearchResult);
+        recyclerView.setAdapter(searchItemAdapter);
+
+        textViewSearchResultImagesCount.setText("Search result images count: " + listOfSearchResult.size());
+    }
+
+    private void searchById(String s) {
+        List<ImageItemModel> list = listFilteredOnLastColumnImages
+                .stream()
+                .filter(c -> c.getId().toLowerCase().contains(s.toLowerCase()))
+                .collect(Collectors.toList());
+        listOfSearchResult = new ArrayList<ImageItemModel>(list);
+        if (listOfSearchResult.size() > 0) {
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+        searchItemAdapter = new SearchItemAdapter(MainActivity.this, listOfSearchResult);
+        recyclerView.setAdapter(searchItemAdapter);
+
+        textViewSearchResultImagesCount.setText("Search result images count: " + listOfSearchResult.size());
+    }
 
     private void populateLists() {
         ImageItemModel imageItemModel;

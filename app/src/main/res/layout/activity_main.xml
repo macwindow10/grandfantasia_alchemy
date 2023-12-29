@@ -211,6 +211,14 @@
                     android:text="15"></CheckBox>
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/text_view_search_result_images_count"
+                android:text="Search result images count: 0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"></TextView>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
