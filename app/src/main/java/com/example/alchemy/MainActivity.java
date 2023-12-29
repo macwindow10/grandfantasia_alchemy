@@ -419,112 +419,115 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
             listFilteredOnLastColumnImages.clear();
-            listFilteredOnLastColumnImages.addAll(listAllImages);
             List<ImageItemModel> list = new ArrayList<>();
-            if (compoundButton.getId() == R.id.checkbox1 && b) {
-                list = listFilteredOnLastColumnImages
+            if (checkBox1.isChecked()) {
+                list = listAllImages
                         .stream()
                         .filter(c -> c.getValue() == 1)
                         .collect(Collectors.toList());
-                listFilteredOnLastColumnImages = new ArrayList<>(list);
+                listFilteredOnLastColumnImages.addAll(list);
             }
-            if (compoundButton.getId() == R.id.checkbox2 && b) {
-                list = listFilteredOnLastColumnImages
+            if (checkBox2.isChecked()) {
+                list = listAllImages
                         .stream()
                         .filter(c -> c.getValue() == 2)
                         .collect(Collectors.toList());
-                listFilteredOnLastColumnImages = new ArrayList<>(list);
+                listFilteredOnLastColumnImages.addAll(list);
             }
-            if (compoundButton.getId() == R.id.checkbox3 && b) {
-                list = listFilteredOnLastColumnImages
+            if (checkBox3.isChecked()) {
+                list = listAllImages
                         .stream()
                         .filter(c -> c.getValue() == 3)
                         .collect(Collectors.toList());
-                listFilteredOnLastColumnImages = new ArrayList<>(list);
+                listFilteredOnLastColumnImages.addAll(list);
             }
-            if (compoundButton.getId() == R.id.checkbox4 && b) {
-                list = listFilteredOnLastColumnImages
+            if (checkBox4.isChecked()) {
+                list = listAllImages
                         .stream()
                         .filter(c -> c.getValue() == 4)
                         .collect(Collectors.toList());
-                listFilteredOnLastColumnImages = new ArrayList<>(list);
+                listFilteredOnLastColumnImages.addAll(list);
             }
-            if (compoundButton.getId() == R.id.checkbox5 && b) {
-                list = listFilteredOnLastColumnImages
+            if (checkBox5.isChecked()) {
+                list = listAllImages
                         .stream()
                         .filter(c -> c.getValue() == 5)
                         .collect(Collectors.toList());
-                listFilteredOnLastColumnImages = new ArrayList<>(list);
+                listFilteredOnLastColumnImages.addAll(list);
             }
-            if (compoundButton.getId() == R.id.checkbox6 && b) {
-                list = listFilteredOnLastColumnImages
+            if (checkBox6.isChecked()) {
+                list = listAllImages
                         .stream()
                         .filter(c -> c.getValue() == 6)
                         .collect(Collectors.toList());
-                listFilteredOnLastColumnImages = new ArrayList<>(list);
+                listFilteredOnLastColumnImages.addAll(list);
             }
-            if (compoundButton.getId() == R.id.checkbox7 && b) {
-                list = listFilteredOnLastColumnImages
+            if (checkBox7.isChecked()) {
+                list = listAllImages
                         .stream()
                         .filter(c -> c.getValue() == 7)
                         .collect(Collectors.toList());
-                listFilteredOnLastColumnImages = new ArrayList<>(list);
+                listFilteredOnLastColumnImages.addAll(list);
             }
-            if (compoundButton.getId() == R.id.checkbox8 && b) {
-                list = listFilteredOnLastColumnImages
+            if (checkBox8.isChecked()) {
+                list = listAllImages
                         .stream()
                         .filter(c -> c.getValue() == 8)
                         .collect(Collectors.toList());
-                listFilteredOnLastColumnImages = new ArrayList<>(list);
+                listFilteredOnLastColumnImages.addAll(list);
             }
-            if (compoundButton.getId() == R.id.checkbox9 && b) {
-                list = listFilteredOnLastColumnImages
+            if (checkBox9.isChecked()) {
+                list = listAllImages
                         .stream()
                         .filter(c -> c.getValue() == 9)
                         .collect(Collectors.toList());
-                listFilteredOnLastColumnImages = new ArrayList<>(list);
+                listFilteredOnLastColumnImages.addAll(list);
             }
-            if (compoundButton.getId() == R.id.checkbox10 && b) {
-                list = listFilteredOnLastColumnImages
+            if (checkBox10.isChecked()) {
+                list = listAllImages
                         .stream()
                         .filter(c -> c.getValue() == 10)
                         .collect(Collectors.toList());
-                listFilteredOnLastColumnImages = new ArrayList<>(list);
+                listFilteredOnLastColumnImages.addAll(list);
             }
-            if (compoundButton.getId() == R.id.checkbox11 && b) {
-                list = listFilteredOnLastColumnImages
+            if (checkBox11.isChecked()) {
+                list = listAllImages
                         .stream()
                         .filter(c -> c.getValue() == 11)
                         .collect(Collectors.toList());
-                listFilteredOnLastColumnImages = new ArrayList<>(list);
+                listFilteredOnLastColumnImages.addAll(list);
             }
-            if (compoundButton.getId() == R.id.checkbox12 && b) {
+            if (checkBox12.isChecked()) {
                 list = listFilteredOnLastColumnImages
                         .stream()
                         .filter(c -> c.getValue() == 12)
                         .collect(Collectors.toList());
-                listFilteredOnLastColumnImages = new ArrayList<>(list);
+                listFilteredOnLastColumnImages.addAll(list);
             }
-            if (compoundButton.getId() == R.id.checkbox13 && b) {
-                list = listFilteredOnLastColumnImages
+            if (checkBox13.isChecked()) {
+                list = listAllImages
                         .stream()
                         .filter(c -> c.getValue() == 13)
                         .collect(Collectors.toList());
-                listFilteredOnLastColumnImages = new ArrayList<>(list);
+                listFilteredOnLastColumnImages.addAll(list);
             }
-            if (compoundButton.getId() == R.id.checkbox14 && b) {
-                list = listFilteredOnLastColumnImages
+            if (checkBox14.isChecked()) {
+                list = listAllImages
                         .stream()
                         .filter(c -> c.getValue() == 14)
                         .collect(Collectors.toList());
-                listFilteredOnLastColumnImages = new ArrayList<>(list);
+                listFilteredOnLastColumnImages.addAll(list);
             }
-            if (compoundButton.getId() == R.id.checkbox15 && b) {
-                list = listFilteredOnLastColumnImages
+            if (checkBox15.isChecked()) {
+                list = listAllImages
                         .stream()
                         .filter(c -> c.getValue() == 15)
                         .collect(Collectors.toList());
-                listFilteredOnLastColumnImages = new ArrayList<>(list);
+                listFilteredOnLastColumnImages.addAll(list);
+            }
+
+            if (noCheckboxChecked()) {
+                listFilteredOnLastColumnImages.addAll(listAllImages);
             }
 
             if (editTextSearchByName.getText().toString().length() > 0) {
@@ -534,6 +537,20 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+    private boolean noCheckboxChecked() {
+        if (checkBox1.isChecked() == false && checkBox2.isChecked() == false &&
+                checkBox3.isChecked() == false && checkBox4.isChecked() == false &&
+                checkBox5.isChecked() == false && checkBox6.isChecked() == false &&
+                checkBox7.isChecked() == false && checkBox8.isChecked() == false &&
+                checkBox9.isChecked() == false && checkBox10.isChecked() == false &&
+                checkBox11.isChecked() == false && checkBox12.isChecked() == false &&
+                checkBox13.isChecked() == false && checkBox14.isChecked() == false &&
+                checkBox15.isChecked() == false) {
+            return true;
+        }
+        return false;
+    }
 
     private void searchByName(String s) {
         List<ImageItemModel> list = listFilteredOnLastColumnImages
