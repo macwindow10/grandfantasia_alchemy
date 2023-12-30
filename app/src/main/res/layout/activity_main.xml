@@ -213,11 +213,11 @@
 
             <TextView
                 android:id="@+id/text_view_search_result_images_count"
-                android:text="Search result images count: 0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"></TextView>
+                android:layout_marginRight="4dp"
+                android:text="Search result images count: 0"></TextView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
@@ -278,60 +278,21 @@
             <GridView
                 android:id="@+id/grid_view"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="500dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:gravity="center"
-                android:horizontalSpacing="8dp"
+                android:horizontalSpacing="4dp"
                 android:nestedScrollingEnabled="true"
                 android:numColumns="8"
                 android:scrollbars="vertical"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="8dp" />
+                android:verticalSpacing="4dp" />
 
-            <TableLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:shrinkColumns="*"
-                android:visibility="gone">
-
-                <TableRow android:layout_margin="8dp">
-
-                    <ImageView
-                        android:id="@+id/image_view_1"
-                        style="@style/image_view_style"></ImageView>
-
-                    <ImageView
-                        android:id="@+id/image_view_2"
-                        style="@style/image_view_style"></ImageView>
-
-                    <ImageView
-                        android:id="@+id/image_view_3"
-                        style="@style/image_view_style"></ImageView>
-
-                    <ImageView
-                        android:id="@+id/image_view_4"
-                        style="@style/image_view_style"></ImageView>
-
-                    <ImageView
-                        android:id="@+id/image_view_5"
-                        style="@style/image_view_style"></ImageView>
-
-                    <ImageView
-                        android:id="@+id/image_view_6"
-                        style="@style/image_view_style"></ImageView>
-
-                    <ImageView
-                        android:id="@+id/image_view_7"
-                        style="@style/image_view_style"></ImageView>
-
-                    <ImageView
-                        android:id="@+id/image_view_8"
-                        style="@style/image_view_style"></ImageView>
-                </TableRow>
-
-            </TableLayout>
-
+                android:text=""></TextView>
         </LinearLayout>
     </ScrollView>
 
